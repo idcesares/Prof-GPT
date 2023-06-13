@@ -1,0 +1,11 @@
+Nome da aula
+Disciplina ou componente curricular
+Esta aula deve conter
+Principais objetivos da aula
+
+- Título da aula
+- Objetivo principal a ser alcançado
+- Roteiro e conteúdo da aula
+- Habilidades e competências a serem desenvolvidas
+- Metodologia e recursos didáticos
+- Avaliação

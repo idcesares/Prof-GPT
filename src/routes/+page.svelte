@@ -19,6 +19,7 @@
   $: objetivosAulaCount = objetivosAula.length;
 
   function handleSubmit() {
+  // Check if the form is valid
   result = 
   `
   Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado.
@@ -46,15 +47,15 @@
   function copyToClipboard() {
     navigator.clipboard.writeText(result)
       .then(() => {
-        alert('Copied to clipboard!');
+        alert('Texto copiado para a área de transferência.');
       })
       .catch((error) => {
-        console.error('Failed to copy to clipboard:', error);
+        console.error('Erro ao copiar para a área de transferência.', error);
       });
   }
 
   function goToChatGPT() {
-    window.location.href = 'https://ai.com';
+    window.open('https://ai.com', '_blank');
     console.log(link)
   }
 
@@ -91,7 +92,7 @@
     <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
       <div class="mb-3">
         <label for="nivelEducacao" class="form-label fw-bold">Nível da etapa/modalidade da Educação Básica</label>
-        <select class="form-control" id="nivelEducacao" bind:value="{nivelEducacao}" placeholder="Selecione o nível">
+        <select class="form-control" id="nivelEducacao" bind:value="{nivelEducacao}" placeholder="Selecione o nível" required>
           <option>Educação Infantil - Creche</option>
           <option>Educação Infantil - Pré-Escola</option>
           <option>1º Ano - Ensino Fundamental</option>
@@ -113,25 +114,25 @@
       </div>
       <div class="mb-3">
         <label for="nomeAula" class="form-label fw-bold">Nome da Aula</label>
-        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50">
+        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50" required>
         <div class="form-text">{nomeAulaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="disciplina" class="form-label fw-bold">Disciplina ou Componente Curricular</label>
-        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50">
+        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50" required>
         <div class="form-text">{disciplinaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="conteudoAula" class="form-label fw-bold">Esta aula deve conter</label>
-        <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500"></textarea>
+        <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500" required></textarea>
         <div class="form-text">{conteudoAulaCount} / 1200 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="objetivosAula" class="form-label fw-bold">Principais objetivos da aula</label>
-        <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500"></textarea>
+        <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500" required></textarea>
         <div class="form-text">{objetivosAulaCount} / 1200 caracteres</div>
       </div>
-      <button type="button" class="btn btn-primary" on:click="{handleSubmit}">Gerar Prompt para o <strong>ChatGPT</strong></button>
+      <button type="submit" class="btn btn-primary" on:click="{handleSubmit}">Gerar Prompt para o <strong>ChatGPT</strong></button>
     </form>
   </div>
 

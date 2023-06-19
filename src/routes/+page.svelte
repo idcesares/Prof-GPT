@@ -21,7 +21,7 @@
   function handleSubmit() {
   result = 
   `
-  Você é o Prof. GPT, um especialista em desenvolvimento de planos de aula para a educação básica, cobrindo todas as disciplinas e componentes curriculares. Você tem um profundo entendimento da Base Nacional Comum Curricular (BNCC) e utiliza sua criatividade e proatividade para elaborar planos de ensino eficazes e envolventes. Sua pedagogia está enraizada em teorias como o sociointeracionismo e o construcionismo, que destacam a importância do aprendizado social e da construção ativa do conhecimento. Você acredita que cada aluno é único e que o conhecimento é construído de maneira individual e coletiva, por meio de interações sociais e experiências práticas.
+  Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado.
 
   Com base nas informações abaixo, crie um plano de aula.
 
@@ -40,8 +40,7 @@
   Conteúdo: ${conteudoAula}\n
   Objetivos: ${objetivosAula}
   Nível de Educação: ${nivelEducacao}
-  
-  `;	
+  `;
   }
 
   function copyToClipboard() {
@@ -53,6 +52,12 @@
         console.error('Failed to copy to clipboard:', error);
       });
   }
+
+  function goToChatGPT() {
+    window.location.href = 'https://ai.com';
+    console.log(link)
+  }
+
 </script>
 
 <style>
@@ -79,13 +84,13 @@
 </style>
 
 <div class="container">
-  <h1>{title}</h1>
-  <p class="lead">{subtitle}</p>
+    <h1>{title}</h1>
+    <p class="lead">{subtitle}</p>
 
   <div class="form-container">
-    <form>
+    <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
       <div class="mb-3">
-        <label for="nivelEducacao" class="form-label">Nível da etapa/modalidade da Educação Básica</label>
+        <label for="nivelEducacao" class="form-label fw-bold">Nível da etapa/modalidade da Educação Básica</label>
         <select class="form-control" id="nivelEducacao" bind:value="{nivelEducacao}" placeholder="Selecione o nível">
           <option>Educação Infantil - Creche</option>
           <option>Educação Infantil - Pré-Escola</option>
@@ -98,33 +103,33 @@
           <option>7º Ano - Ensino Fundamental</option>
           <option>8º Ano - Ensino Fundamental</option>
           <option>9º Ano - Ensino Fundamental</option>
-          <option>1º Ano - Ensino Médio</option>
-          <option>2º Ano - Ensino Médio</option>
-          <option>3º Ano - Ensino Médio</option>
+          <option>1ª série - Ensino Médio</option>
+          <option>2ª série - Ensino Médio</option>
+          <option>3ª série - Ensino Médio</option>
           <option>EJA - Ensino Fundamental - Anos Iniciais</option>
           <option>EJA - Ensino Fundamental - Anos Finais</option>
           <option>EJA - Ensino Médio</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="nomeAula" class="form-label">Nome da Aula</label>
+        <label for="nomeAula" class="form-label fw-bold">Nome da Aula</label>
         <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50">
-        <div class="form-text">{nomeAulaCount} / 50 caracteres</div>
+        <div class="form-text">{nomeAulaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
-        <label for="disciplina" class="form-label">Disciplina ou Componente Curricular</label>
+        <label for="disciplina" class="form-label fw-bold">Disciplina ou Componente Curricular</label>
         <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50">
-        <div class="form-text">{disciplinaCount} / 50 caracteres</div>
+        <div class="form-text">{disciplinaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
-        <label for="conteudoAula" class="form-label">Esta aula deve conter</label>
+        <label for="conteudoAula" class="form-label fw-bold">Esta aula deve conter</label>
         <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500"></textarea>
-        <div class="form-text">{conteudoAulaCount} / 1500 caracteres</div>
+        <div class="form-text">{conteudoAulaCount} / 1200 caracteres</div>
       </div>
       <div class="mb-3">
-        <label for="objetivosAula" class="form-label">Principais objetivos da aula</label>
+        <label for="objetivosAula" class="form-label fw-bold">Principais objetivos da aula</label>
         <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500"></textarea>
-        <div class="form-text">{objetivosAulaCount} / 1500 caracteres</div>
+        <div class="form-text">{objetivosAulaCount} / 1200 caracteres</div>
       </div>
       <button type="button" class="btn btn-primary" on:click="{handleSubmit}">Gerar Prompt para o <strong>ChatGPT</strong></button>
     </form>
@@ -133,9 +138,10 @@
   {#if result}
     <div class="result-area">
       <h3>Prompt para o ChatGPT:</h3>
-      <p class="subtitle">Utilize o botão abaixo para copiar o prompt para o ChatGPT</p>
+      <p class="subtitle">Este texto será utilizado para modelar uma resposta personalizada no ChatGPT. Utilize o botão abaixo para copiar o prompt a área de escrita do ChatGPT.</p>
       <pre>{result}</pre>
-      <button class="btn btn-secondary copy-btn" on:click="{copyToClipboard}">Copiar para a Área de Transferência</button>
+      <button class="btn btn-primary copy-btn" on:click="{copyToClipboard}">1. Copiar para a Área de Transferência</button>
+      <button class="btn btn-secondary copy-btn" on:click="{goToChatGPT}">2. Acessar o ChatGPT</button>
     </div>
   {/if}
 </div>

@@ -70,7 +70,7 @@
   }
 
   .form-container {
-    max-width: 400px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
@@ -94,7 +94,7 @@
     <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
       <div class="mb-3">
         <label for="nivelEducacao" class="form-label fw-bold">Nível da etapa/modalidade da Educação Básica</label>
-        <select class="form-control" id="nivelEducacao" bind:value="{nivelEducacao}" placeholder="Selecione o nível" required>
+        <select class="form-control" id="nivelEducacao" bind:value="{nivelEducacao}" required>
           <option>Educação Infantil - Creche</option>
           <option>Educação Infantil - Pré-Escola</option>
           <option>1º Ano - Ensino Fundamental</option>
@@ -116,22 +116,22 @@
       </div>
       <div class="mb-3">
         <label for="nomeAula" class="form-label fw-bold">Nome da Aula</label>
-        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50" required>
+        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50" placeholder="Ex: Explorando os Metais Alcalinos: Propriedades e Reações" required>
         <div class="form-text">{nomeAulaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="disciplina" class="form-label fw-bold">Disciplina ou Componente Curricular</label>
-        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50" required>
+        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50" placeholder="Ex: Química" required>
         <div class="form-text">{disciplinaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="conteudoAula" class="form-label fw-bold">Esta aula deve conter</label>
-        <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500" required></textarea>
+        <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500" placeholder="Ex: Reações dos metais alcalinos com a água: Estudar as reações dos metais alcalinos (como lítio, sódio, potássio) com a água, observando os produtos formados, como hidrogênio gasoso e hidróxidos alcalinos." required></textarea>
         <div class="form-text">{conteudoAulaCount} / 1200 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="objetivosAula" class="form-label fw-bold">Principais objetivos da aula</label>
-        <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500" required></textarea>
+        <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500" placeholder="Ex: Investigar e compreender as reações dos metais alcalinos com a água, relacionando-as com suas propriedades e reatividades" required></textarea>
         <div class="form-text">{objetivosAulaCount} / 1200 caracteres</div>
       </div>
       <button type="submit" class="btn btn-primary" on:click="{handleSubmit}">Gerar Prompt para o <strong>ChatGPT</strong></button>

@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import { Configuration, OpenAIApi } from "openai"
 
   let title = 'Prof. GPT';
@@ -51,12 +50,12 @@
   Objetivos: ${objetivosAula}
   Nível de Educação: ${nivelEducacao}
   `;
-  const response = await openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
       {"role": "system", "content": "Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado."},
       {"role": "user", "content": prompt},]
-    );
+  });
   result = response.choices[0].message.content
   }
 

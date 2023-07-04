@@ -1,11 +1,15 @@
 <script>
+  import { onMount } from "svelte";
+  import { Configuration, OpenAIApi } from "openai"
+
   let title = 'Prof. GPT';
-  let subtitle = 'Co-crie seu Plano de Aula com auxílio de IA';
+  let subtitle = 'Co-crie seu Plano de Aula com auxílio de Inteligência Artificial';
   let nomeAula = '';
   let disciplina = '';
   let conteudoAula = '';
   let objetivosAula = '';
   let nivelEducacao = '';
+  let prompt = '';
   let result = '';
 
   let nomeAulaCount = 0;
@@ -18,16 +22,18 @@
   $: conteudoAulaCount = conteudoAula.length;
   $: objetivosAulaCount = objetivosAula.length;
 
-  function handleSubmit() {
+  const configuration = new Configuration({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    });
+  const openai = new OpenAIApi(configuration);
+
+  async function handleSubmit() {
   if (!nomeAula || !disciplina || !conteudoAula || !objetivosAula || !nivelEducacao) {
     alert('Por favor, preencha todos os campos.');
     return;
   }
-  result = 
-  `
-  Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado.
-
-  Com base nas informações abaixo, crie um plano de aula.
+  prompt = 
+  `Com base nas informações abaixo, crie um plano de aula.
 
   O plano de aula deverá conter:
   - Título da aula
@@ -45,7 +51,15 @@
   Objetivos: ${objetivosAula}
   Nível de Educação: ${nivelEducacao}
   `;
+  const response = await openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+      {"role": "system", "content": "Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado."},
+      {"role": "user", "content": prompt},]
+    );
+  result = response.choices[0].message.content
   }
+
   function copyToClipboard() {
     navigator.clipboard.writeText(result)
       .then(() => {
@@ -116,12 +130,12 @@
       </div>
       <div class="mb-3">
         <label for="nomeAula" class="form-label fw-bold">Nome da Aula</label>
-        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="50" placeholder="Ex: Explorando os Metais Alcalinos: Propriedades e Reações" required>
+        <input type="text" class="form-control" id="nomeAula" bind:value="{nomeAula}" maxlength="100" placeholder="Ex: Explorando os Metais Alcalinos: Propriedades e Reações" required>
         <div class="form-text">{nomeAulaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
         <label for="disciplina" class="form-label fw-bold">Disciplina ou Componente Curricular</label>
-        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="50" placeholder="Ex: Química" required>
+        <input type="text" class="form-control" id="disciplina" bind:value="{disciplina}" maxlength="100" placeholder="Ex: Química" required>
         <div class="form-text">{disciplinaCount} / 100 caracteres</div>
       </div>
       <div class="mb-3">
@@ -129,7 +143,7 @@
         <textarea class="form-control" id="conteudoAula" rows="3" bind:value="{conteudoAula}" maxlength="1500" placeholder="Ex: Reações dos metais alcalinos com a água: Estudar as reações dos metais alcalinos (como lítio, sódio, potássio) com a água, observando os produtos formados, como hidrogênio gasoso e hidróxidos alcalinos." required></textarea>
         <div class="form-text">{conteudoAulaCount} / 1200 caracteres</div>
       </div>
-      <div class="mb-3">
+      <div class="mb-3">  
         <label for="objetivosAula" class="form-label fw-bold">Principais objetivos da aula</label>
         <textarea class="form-control" id="objetivosAula" rows="3" bind:value="{objetivosAula}" maxlength="1500" placeholder="Ex: Investigar e compreender as reações dos metais alcalinos com a água, relacionando-as com suas propriedades e reatividades" required></textarea>
         <div class="form-text">{objetivosAulaCount} / 1200 caracteres</div>

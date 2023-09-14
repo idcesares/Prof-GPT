@@ -5,7 +5,7 @@ const css = {
   map: null
 };
 let title = "Prof. GPT";
-let subtitle = "Co-crie seu Plano de Aula com auxílio de IA";
+let subtitle = "Co-crie seu Plano de Aula com auxílio de Inteligência Artificial";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let nomeAula = "";
   let disciplina = "";

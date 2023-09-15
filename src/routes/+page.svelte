@@ -1,6 +1,7 @@
 <script>
-  import { Configuration, OpenAIApi } from "openai"
 
+  //import fetch from 'node-fetch';
+  
   let title = 'Prof. GPT';
   let subtitle = 'Co-crie seu Plano de Aula com auxílio de Inteligência Artificial';
   let nomeAula = '';
@@ -20,11 +21,6 @@
   $: disciplinaCount = disciplina.length;
   $: conteudoAulaCount = conteudoAula.length;
   $: objetivosAulaCount = objetivosAula.length;
-
-  const configuration = new Configuration({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-    });
-  const openai = new OpenAIApi(configuration);
 
   async function handleSubmit() {
   if (!nomeAula || !disciplina || !conteudoAula || !objetivosAula || !nivelEducacao) {
@@ -50,14 +46,40 @@
   Objetivos: ${objetivosAula}
   Nível de Educação: ${nivelEducacao}
   `;
-const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [
-      {"role": "system", "content": "Como Prof. GPT, você é um especialista no desenvolvimento de planos de aula personalizados para a educação básica, abrangendo todas as disciplinas. Você entende profundamente a Base Nacional Comum Curricular (BNCC) do Brasil e elabora planos de ensino que atendem às diretrizes nacionais enquanto estimulam a curiosidade e o amor pelo aprendizado. Sua pedagogia se baseia no sociointeracionismo e construcionismo, realçando a importância do aprendizado social e da construção ativa do conhecimento. Acreditando na unicidade de cada aluno, você adapta métodos de ensino às necessidades individuais, promove um ambiente de aprendizado inclusivo e diversificado, e encoraja os alunos a serem questionadores e exploradores ativos em seu processo de aprendizado."},
-      {"role": "user", "content": prompt},]
-  });
-  result = response.choices[0].message.content
-  }
+
+const url = "https://api.openai.com/v1/chat/completions";
+const headers = {
+  "Content-Type": "application/json",
+  "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+};
+
+const body = JSON.stringify({
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "Hello!"
+    }
+  ]
+});
+
+
+const response = await fetch(url, {
+  method: "POST",
+  headers,
+  body,
+});
+
+console.log(response);
+
+result = response.choices[0].message.content;
+
+
+}
 
   function copyToClipboard() {
     navigator.clipboard.writeText(result)

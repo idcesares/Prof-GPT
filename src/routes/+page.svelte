@@ -57,7 +57,7 @@
   }
 
   function goToChatGPT() {
-    window.open('https://ai.com', '_blank');
+    window.open('https://chat.openai.com', '_blank');
     console.log(link)
   }
 

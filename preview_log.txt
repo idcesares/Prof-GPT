@@ -1,0 +1,7 @@
+npm warn Unknown project config "resolution-mode". This will stop working in the next major version of npm.
+
+> profgpt@0.0.1 preview
+> vite preview --host
+
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: http://192.168.0.2:4173/
